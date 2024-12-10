@@ -28,4 +28,30 @@ class ValidatorUtil {
     }
     return null;
   }
+
+  static String? validatorTitle(String? value) {
+    if (value?.trim().isEmpty ?? true) {
+      return '상품명을 입력해주세요!';
+    }
+    if (value!.length < 2) {
+      return '상품명을 2자 이상 입력해주세요!';
+    }
+    return null;
+  }
+
+  static String? validatoPrice(String? value) {
+    if (value?.trim().isEmpty ?? true) {
+      return '가격을 입력해주세요!';
+    }
+
+    return null;
+  }
+
+  static String? validatoContent(String? value) {
+    if (value?.trim().isEmpty ?? true) {
+      return '상품내용을 입력해주세요!';
+    }
+
+    return null;
+  }
 }
