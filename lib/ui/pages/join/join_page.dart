@@ -4,6 +4,8 @@ import 'package:flutter_market_app/ui/widgets/nickname_text_form_field.dart';
 import 'package:flutter_market_app/ui/widgets/password_text_form_field.dart';
 
 class JoinPage extends StatefulWidget {
+  JoinPage(this.address);
+  final String address;
   @override
   State<JoinPage> createState() => _JoinPageState();
 }
