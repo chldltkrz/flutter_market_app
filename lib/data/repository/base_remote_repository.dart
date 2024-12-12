@@ -38,7 +38,6 @@ class AuthInterceptor extends Interceptor {
     if (response.realUri.path == '/login' && response.statusCode == 200) {
       final token = response.headers['Authorization'];
       bearerToken = token?.first;
-      print("로그인 성공 '$bearerToken'");
     }
     super.onResponse(response, handler);
   }
