@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_market_app/core/snackbar_util.dart';
+import 'package:flutter_market_app/ui/pages/home/home_page.dart';
+import 'package:flutter_market_app/ui/pages/login/login_view_model.dart';
 import 'package:flutter_market_app/ui/widgets/id_text_form_field.dart';
 import 'package:flutter_market_app/ui/widgets/password_text_form_field.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -42,12 +46,33 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 20),
                 PasswordTextFormField(controller: passwordController),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    formKey.currentState?.validate();
-                  },
-                  child: Text('로그인'),
-                ),
+                Consumer(builder: (context, ref, child) {
+                  // login 요청 when validation is successful
+                  return ElevatedButton(
+                    onPressed: () async {
+                      if (formKey.currentState?.validate() ?? false) {}
+                      final viewModel = ref.read(loginViewModel);
+                      final loginResult = await viewModel.login(
+                        username: idController.text,
+                        password: passwordController.text,
+                      );
+                      if (loginResult) {
+                        Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (context) {
+                          return HomePage();
+                          // 기존 네비게이터 스택에 남아있는 페이지들이 하나씩 route인자로 넘어와서 함수가 실행됨
+                          // 페이지 스택에 남길지 여부 리턴;
+                        }), (route) {
+                          return false;
+                        });
+                      } else {
+                        SnackbarUtil.showSnackBar(
+                            context, '아이디 또는 비밀번호가 일치하지 않습니다.');
+                      }
+                    },
+                    child: Text('로그인'),
+                  );
+                }),
               ],
             ),
           )),
