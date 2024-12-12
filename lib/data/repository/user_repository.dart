@@ -46,12 +46,12 @@ class UserRepository extends BaseRemoteRepository {
       '/api/user/join',
       data: {
         'username': username,
-        'password': password,
         'nickname': nickname,
+        'password': password,
         'addressFullName': addressFullName,
         'profileImageId': profileImageId,
       },
     );
-    return response.statusCode == 200;
+    return response.statusCode == 201;
   }
 }
