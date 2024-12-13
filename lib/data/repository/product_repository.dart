@@ -44,4 +44,53 @@ class ProductRepository extends BaseRemoteRepository {
     final response = await client.delete('/api/product/$id');
     return response.statusCode == 200;
   }
+
+  // 상품등록
+  Future<Product?> create({
+    required String title,
+    required String content,
+    required List<int> imageFileIdList,
+    required int categoryId,
+    required int price,
+  }) async {
+    final response = await client.post(
+      '/api/product',
+      data: {
+        'title': title,
+        'content': content,
+        'imageFileIdList': imageFileIdList,
+        'categoryId': categoryId,
+        'price': price,
+      },
+    );
+    if (response.statusCode == 201) {
+      final content = response.data['content'];
+      return Product.fromJson(content);
+    }
+
+    return null;
+  }
+
+  // 상품수정
+  Future<bool> update({
+    required int id,
+    required String title,
+    required String content,
+    required List<int> imageFileIdList,
+    required int categoryId,
+    required int price,
+  }) async {
+    final response = await client.put(
+      '/api/product',
+      data: {
+        'id': id,
+        'title': title,
+        'content': content,
+        'imageFileIdList': imageFileIdList,
+        'categoryId': categoryId,
+        'price': price,
+      },
+    );
+    return response.statusCode == 200;
+  }
 }
