@@ -35,10 +35,6 @@ class ProductDetailViewModel extends AutoDisposeFamilyNotifier<Product?, int> {
   Future<bool> delete() async {
     return await productRepository.delete(arg);
   }
-
-  Future<void> createChat() async {
-    //TODO 채팅방 생성
-  }
 }
 
 // 3. 뷰모델 관리자

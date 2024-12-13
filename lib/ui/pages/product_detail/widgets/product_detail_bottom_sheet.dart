@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_market_app/ui/chat_global_view_model.dart';
 import 'package:flutter_market_app/ui/pages/chat_detail/chat_detail_page.dart';
 import 'package:flutter_market_app/ui/pages/home/_tab/home_tab/home_tab_view_model.dart';
 import 'package:flutter_market_app/ui/pages/product_detail/product_detail_view_model.dart';
@@ -62,9 +63,19 @@ class ProductDetailBottomSheet extends StatelessWidget {
                     width: 100,
                     height: 40,
                     child: ElevatedButton(
-                      onPressed: () {
-                        // TODO 구현
-                        vm.createChat();
+                      onPressed: () async {
+                        final chatVm = ref.read(chatGlobalViewModel.notifier);
+                        var roomId = chatVm.findChatRoomByProductId(productId);
+                        if (roomId == null) {
+                          final result = await chatVm.createChat(productId);
+                          if (result != null) {
+                            roomId = result;
+                          }
+                        }
+                        if (roomId == null) {
+                          return;
+                        }
+                        chatVm.fetchChatDetail(roomId);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return ChatDetailPage();
