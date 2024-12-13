@@ -1,3 +1,4 @@
+import 'package:flutter_market_app/data/model/product.dart';
 import 'package:flutter_market_app/data/model/user.dart';
 import 'package:flutter_market_app/data/repository/base_remote_repository.dart';
 
