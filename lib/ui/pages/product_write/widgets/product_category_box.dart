@@ -1,40 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_market_app/data/model/product.dart';
+import 'package:flutter_market_app/ui/pages/product_write/product_wirte_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProductCategoryBox extends StatelessWidget {
+  ProductCategoryBox(this.product);
+  final Product? product;
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: PopupMenuButton<String>(
-          position: PopupMenuPosition.under,
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          onSelected: (value) {
-            print(value);
-          },
-          itemBuilder: (context) {
-            return [
-              categoryItem('디지털/가전', true),
-              categoryItem('생활용품', false),
-            ];
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(8),
+    return Consumer(builder: (context, ref, child) {
+      final state = ref.watch(productWriteViewModel(product));
+      final vm = ref.read(productWriteViewModel(product).notifier);
+
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: PopupMenuButton<String>(
+            position: PopupMenuPosition.under,
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
             ),
-            padding: EdgeInsets.all(10),
-            child: Text(
-              "카테고리 선택",
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
+            onSelected: vm.onCategorySelected,
+            itemBuilder: (context) {
+              final catetories = state.categories;
+              return catetories
+                  .map((e) => categoryItem(
+                      e.category, e.id == state.selectedCategory?.id))
+                  .toList();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8),
               ),
-            ),
-          )),
-    );
+              padding: EdgeInsets.all(10),
+              child: Text(
+                state.selectedCategory?.category ?? '카테고리 선택',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )),
+      );
+    });
   }
 
   PopupMenuItem<String> categoryItem(String text, bool isSelected) {

@@ -39,7 +39,7 @@ class ValidatorUtil {
     return null;
   }
 
-  static String? validatoPrice(String? value) {
+  static String? validatorPrice(String? value) {
     if (value?.trim().isEmpty ?? true) {
       return '가격을 입력해주세요!';
     }
@@ -47,7 +47,7 @@ class ValidatorUtil {
     return null;
   }
 
-  static String? validatoContent(String? value) {
+  static String? validatorContent(String? value) {
     if (value?.trim().isEmpty ?? true) {
       return '상품내용을 입력해주세요!';
     }

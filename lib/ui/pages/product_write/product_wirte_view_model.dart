@@ -34,7 +34,7 @@ class ProductWriteState {
 }
 
 // 2. 뷰모델 만들기
-class ProductWirteViewModel
+class ProductWriteViewModel
     extends AutoDisposeFamilyNotifier<ProductWriteState, Product?> {
   @override
   ProductWriteState build(Product? arg) {
@@ -125,6 +125,6 @@ class ProductWirteViewModel
 // 3. 뷰모델 관리자 만들기
 
 final productWriteViewModel = NotifierProvider.autoDispose
-    .family<ProductWirteViewModel, Product?, int>(() {
-  return ProductWirteViewModel();
+    .family<ProductWriteViewModel, ProductWriteState, Product?>(() {
+  return ProductWriteViewModel();
 });
