@@ -63,4 +63,35 @@ class Product {
         'updatedAt': updatedAt.toIso8601String(),
         'createdAt': createdAt.toIso8601String(),
       };
+
+  // copywith method
+  Product copyWith({
+    int? id,
+    String? title,
+    String? content,
+    List<FileModel>? imageFiles,
+    User? user,
+    Address? address,
+    ProductCategory? category,
+    int? price,
+    int? likeCnt,
+    bool? myLlike,
+    DateTime? updatedAt,
+    DateTime? createdAt,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      imageFiles: imageFiles ?? this.imageFiles,
+      user: user ?? this.user,
+      address: address ?? this.address,
+      category: category ?? this.category,
+      price: price ?? this.price,
+      likeCnt: likeCnt ?? this.likeCnt,
+      myLlike: myLlike ?? this.myLlike,
+      updatedAt: updatedAt ?? this.updatedAt,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }
